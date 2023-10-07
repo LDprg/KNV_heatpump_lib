@@ -1,7 +1,16 @@
 {
     "[python]": {
-        "editor.defaultFormatter": "ms-python.python"
+        "editor.defaultFormatter": "ms-python.autopep8",
+        "editor.formatOnSave": true
     },
-    "python.formatting.provider": "none",
-    "python.analysis.typeCheckingMode": "basic"
+    "python.analysis.typeCheckingMode": "off",
+    "nixEnvSelector.suggestion": false,
+    "cSpell.words": [
+        "functiongroup",
+        "knvheatpump",
+        "knvheatpumplib",
+        "knvparser",
+        "listfunctions",
+        "websockets"
+    ]
 }

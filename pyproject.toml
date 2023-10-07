@@ -3,26 +3,26 @@ requires = ["setuptools>=61.0.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
-include=['knvheatpumplib']
+include = ['knvheatpumplib']
 
 [tool.pytest.ini_options]
 minversion = "6.0"
-addopts = "-ra -q"
-testpaths = [
-    "tests",
-]
+addopts = "-ra -q -s"
+log_cli = true
+log_cli_level = "DEBUG"
+testpaths = ["tests"]
 
 [project]
 name = "knvheatpumplib"
-authors = [
-    {name = "LDprg", email = "lukas_4dr@gmx.at"},
-]
+authors = [{ name = "LDprg", email = "lukas_4dr@gmx.at" }]
 description = "KNV heatpump Python library"
-readme = "README.md"
-license = {text = "GPL-3"}
+license = { text = "GPL-3" }
 dependencies = [
+    "logging",
+    "async-timeout",
+    "asyncio",
     "websockets",
     "requests",
     'importlib-metadata; python_version<"3.8"',
 ]
-dynamic = ["version"]
+dynamic = ["version", "readme"]
