@@ -1,6 +1,16 @@
 {
-  outputs = { nixpkgs }: {
-    devShell.${builtins.currentSystem} =
-      import ./shell.nix { inherit nixpkgs };
+  description = "KVN heatpump python libary";
+
+  inputs = {
+    flake-utils.url = "github:numtide/flake-utils";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
+
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let pkgs = nixpkgs.legacyPackages.${system};
+      in {
+        devShell.${system} =
+          import ./shell.nix { inherit pkgs system; };
+      });
 }
