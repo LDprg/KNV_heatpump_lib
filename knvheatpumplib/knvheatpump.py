@@ -20,7 +20,7 @@ async def get_data(ip, username, password):
     """
 
     uri = "ws://" + ip + ":3118"
-    valueIds = []
+    value_ids = []
 
     logger.info("Starting Connection")
     async with websockets.connect(uri) as websocket:
@@ -49,13 +49,14 @@ async def get_data(ip, username, password):
         while True:
             response = knvparser.ws2json(await websocket.recv())
 
-            if response["command"] != "printHotlinks" and response["command"] != "removeAllHotlinks":
+            if response["command"] != "printHotlinks" and \
+               response["command"] != "removeAllHotlinks":
                 break
 
         while True:
             result = response["result"]["listfunctions"]
             for el in result:
-                valueIds.extend(knvparser.gen_func_val_ids(el))
+                value_ids.extend(knvparser.gen_func_val_ids(el))
 
             try:
                 async with timeout(1):
@@ -67,11 +68,11 @@ async def get_data(ip, username, password):
             if response["command"] != "getListFunctions":
                 break
 
-        logger.info(valueIds)
+        logger.info(value_ids)
 
         # Request Values
 
-        for val in valueIds:
+        for val in value_ids:
             await websocket.send(knvparser.add_hotlink(val))
 
         while True:

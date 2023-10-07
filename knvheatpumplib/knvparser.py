@@ -23,7 +23,7 @@ def json2ws(code):
 
 def get_val_ids_by_func_group(group):
     """
-    Returns a set of partiall var ids by function group
+    Returns a set of partial var ids by function group
     """
     if group == 100:
         return [0, 5, 6, 100, 2, 3, 201, 202]
