@@ -4,6 +4,8 @@ Functions for interacting with KNV Home
 
 # pylint: disable=no-member
 
+from urllib.parse import unquote
+
 import asyncio
 import logging
 import websockets
@@ -21,8 +23,9 @@ async def get_data(ip, username, password):
 
     uri = "ws://" + ip + ":3118"
     value_ids = []
+    data = {}
 
-    logger.info("Starting Connection")
+    logger.info("Starting connection")
     async with websockets.connect(uri) as websocket:
 
         # Init stuff
@@ -59,7 +62,7 @@ async def get_data(ip, username, password):
                 value_ids.extend(knvparser.gen_func_val_ids(el))
 
             try:
-                async with timeout(1):
+                async with timeout(0.5):
                     response = knvparser.ws2json(await websocket.recv())
             except asyncio.TimeoutError:
                 logger.info("Received all List Functions")
@@ -68,7 +71,7 @@ async def get_data(ip, username, password):
             if response["command"] != "getListFunctions":
                 break
 
-        logger.info(value_ids)
+        logger.debug(value_ids)
 
         # Request Values
 
@@ -78,9 +81,46 @@ async def get_data(ip, username, password):
         while True:
             response = knvparser.ws2json(await websocket.recv())
 
-            if response["command"] != "addHotlink" and response["command"] != "HLInfo":
+            if response["command"] != "addHotlink":
                 break
 
-        logger.info(response)
+        while response["command"] == "HLInfo":
+            data[response["path"]] = {
+                "path": response["path"],
+                "name": unquote(response["name"]),
+                "unit": unquote(response["unit"]),
+                "writeable": response["writeable"],
+                "min": response["min"],
+                "max": response["max"],
+                "step": response["step"]
+            }
 
-        return True
+            try:
+                async with timeout(0.5):
+                    response = knvparser.ws2json(await websocket.recv())
+            except asyncio.TimeoutError:
+                logger.info("Received all HLInfo")
+                break
+
+            if response["command"] != "HLInfo":
+                break
+
+        while True:
+            if response["command"] == "HLVal":
+                for val in response["values"]:
+                    data[val["path"]]["value"] = val["result"]
+
+            try:
+                async with timeout(0.5):
+                    response = knvparser.ws2json(await websocket.recv())
+            except asyncio.TimeoutError:
+                logger.info("Received all HLVal")
+                break
+
+        logger.debug(response)
+
+        logger.debug(data)
+
+        logger.info("Finished data fetch")
+
+        return data

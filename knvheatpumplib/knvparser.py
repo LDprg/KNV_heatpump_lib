@@ -21,16 +21,23 @@ def json2ws(code):
     return "#" + json.dumps(code) + "\n"
 
 
-def get_val_ids_by_func_group(group):
+def get_val_ids_by_func_group(code):
     """
     Returns a set of partial var ids by function group
     """
-    if group == 100:
+    if code["functiongroupId"] == 100:
         return [0, 5, 6, 100, 2, 3, 201, 202]
-    elif group == 101:
+    elif code["functiongroupId"] == 101:
         return [0, 1, 5, 6, 20]
     else:
         return []
+
+
+def gen_func_id(code):
+    """
+    Generates function ids
+    """
+    return str(code["unitId"]) + "." + str(code["functiongroupId"]) + "." + str(code["functionId"])
 
 
 def gen_func_val_ids(code):
@@ -38,13 +45,12 @@ def gen_func_val_ids(code):
     Generates for every function a set of Variables IDs
     """
 
-    const_var = get_val_ids_by_func_group(code["functiongroupId"])
+    const_var = get_val_ids_by_func_group(code)
 
     result = []
 
     for var in const_var:
-        result.append(str(code["unitId"]) + "." + str(code["functiongroupId"]) +
-                      "." + str(code["functionId"]) + "." + str(var))
+        result.append(gen_func_id(code) + "." + str(var))
 
     return result
 

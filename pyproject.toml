@@ -9,7 +9,7 @@ include = ['knvheatpumplib']
 minversion = "6.0"
 addopts = "-ra -q -s"
 log_cli = true
-log_cli_level = "DEBUG"
+log_cli_level = "INFO"
 testpaths = ["tests"]
 
 [project]
