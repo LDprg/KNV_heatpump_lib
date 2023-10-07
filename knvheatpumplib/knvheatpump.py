@@ -108,7 +108,7 @@ async def get_data(ip, username, password):
         while True:
             if response["command"] == "HLVal":
                 for val in response["values"]:
-                    data[val["path"]]["value"] = val["result"]
+                    data[val["path"]]["value"] = unquote(val["result"])
 
             try:
                 async with timeout(0.5):
