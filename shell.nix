@@ -1,3 +1,3 @@
-{ nixpkgs ? import <nixpkgs> { } }:
-with nixpkgs;
-mkShellNoCC { nativeBuildInputs = [ python3 ]; }
+{ system ? builtins.currentSystem, pkgs ? import <nixpkgs> { inherit system; }
+}:
+pkgs.mkShell { nativeBuildInputs = with pkgs; [ python3 ]; }

@@ -6,8 +6,8 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
   };
 
-  outputs = { self, nixpkgs, flake-utils }: {
-    devShell.x86_64-linux =
-      import ./shell.nix { nixpkgs = nixpkgs.legacyPackages.x86_64-linux; };
-  };
+  outputs = { self, nixpkgs, flake-utils }:
+    flake-utils.lib.eachDefaultSystem (system:
+      let pkgs = nixpkgs.legacyPackages.${system};
+      in { devShell = import ./shell.nix { inherit pkgs system; }; });
 }
