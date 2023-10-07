@@ -14,7 +14,6 @@ testpaths = [
 
 [project]
 name = "knvheatpumplib"
-version = "0.0.1"
 authors = [
     {name = "LDprg", email = "lukas_4dr@gmx.at"},
 ]
@@ -25,3 +24,4 @@ dependencies = [
     "requests",
     'importlib-metadata; python_version<"3.8"',
 ]
+dynamic = ["version"]
