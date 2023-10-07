@@ -21,6 +21,7 @@ description = "KNV heatpump Python library"
 readme = "README.md"
 license = {text = "GPL-3"}
 dependencies = [
+    "websockets",
     "requests",
     'importlib-metadata; python_version<"3.8"',
 ]

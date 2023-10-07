@@ -2,6 +2,6 @@
 }:
 pkgs.mkShell {
   nativeBuildInputs = with pkgs; [
-    (python3.withPackages (ps: with ps; [ pip wheel setuptools build pytest ]))
+    (python3.withPackages (ps: with ps; [ pip wheel setuptools build pytest websockets ]))
   ];
 }
