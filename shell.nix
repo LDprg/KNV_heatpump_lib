@@ -1,5 +1,3 @@
-with import <nixpkgs> {}; mkShellNoCC {
-  nativeBuildInputs = [
-    python3
-  ];
-}
+{ nixpkgs ? import <nixpkgs> { } }:
+with nixpkgs;
+mkShellNoCC { nativeBuildInputs = [ python3 ]; }
