@@ -26,4 +26,5 @@ dependencies = [
     "requests",
     'importlib-metadata; python_version<"3.8"',
 ]
-dynamic = ["version"]
+#dynamic = ["version"]
+version = "0.0.3"
