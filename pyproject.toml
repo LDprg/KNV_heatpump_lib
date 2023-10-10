@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=61.0.0", "wheel", "pip"]
+requires = ["setuptools>=61.0.0", "setuptools-scm", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
@@ -12,19 +12,22 @@ log_cli = true
 log_cli_level = "INFO"
 testpaths = ["tests"]
 
+[project.urls]
+"Homepage" = "https://github.com/LDprg/KNV_heatpump_lib"
+
 [project]
 name = "knvheatpumplib"
 authors = [{ name = "LDprg", email = "lukas_4dr@gmx.at" }]
 description = "KNV heatpump Python library"
 license = { text = "GPL-3" }
 readme = "README.md"
-dependencies = [
-    "logging",
-    "async-timeout",
-    "asyncio",
-    "websockets",
-    "requests",
-    'importlib-metadata; python_version<"3.8"',
-]
-#dynamic = ["version"]
-version = "0.0.5"
+# dependencies = [
+#     "logging",
+#     "async-timeout",
+#     "asyncio",
+#     "websockets",
+#     "requests",
+#     'importlib-metadata; python_version<"3.8"',
+# ]
+dynamic = ["version"]
+#version = "0.0.6"
