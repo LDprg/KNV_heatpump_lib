@@ -4,6 +4,6 @@ pkgs.mkShell {
   nativeBuildInputs = with pkgs;
     [
       (python3.withPackages
-        (ps: with ps; [ pip wheel setuptools build pytest websockets async-timeout ]))
+        (ps: with ps; [ pip wheel setuptools setuptools-scm build pytest websockets async-timeout ]))
     ];
 }

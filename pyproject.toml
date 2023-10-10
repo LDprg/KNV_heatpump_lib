@@ -5,6 +5,8 @@ build-backend = "setuptools.build_meta"
 [tool.setuptools.packages.find]
 include = ['knvheatpumplib']
 
+[tool.setuptools_scm]
+
 [tool.pytest.ini_options]
 minversion = "6.0"
 addopts = "-ra -q -s"
@@ -29,5 +31,5 @@ readme = "README.md"
 #     "requests",
 #     'importlib-metadata; python_version<"3.8"',
 # ]
-#dynamic = ["version"]
-version = "0.0.7"
+dynamic = ["version"]
+#version = "0.0.7"
