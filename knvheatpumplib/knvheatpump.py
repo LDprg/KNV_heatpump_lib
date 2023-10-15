@@ -27,36 +27,33 @@ class Socket:
         self.url = "ws://" + ip + ":3118"
 
         logger.info("Creating connection")
-        for websocket in websockets.connect(self.url):
+        async for websocket in websockets.connect(self.url):
             try:
                 self.websocket = websocket
+
+                await self.websocket.send('#serial?120623100000028\n')
+
+                logger.info("Logging in")
+                await self.websocket.send(knvparser.login(username, password))
+
+                logger.info("Reset Hotlinks")
+                await self.websocket.send(knvparser.command("printHotlinks"))
+                await self.websocket.send(knvparser.command("removeAllHotlinks"))
+
+                logger.info("Request List Functions")
+                await self.websocket.send(knvparser.get_list_functions(1, 2))
+                await self.websocket.send(knvparser.get_list_functions(2, 2))
+
                 async for message in websocket:
-                    knvparser.ws2json(message)
+                    await self.proc_command(knvparser.ws2json(message))
             except websockets.ConnectionClosed:
                 self.websocket = None
                 continue
-            await self.websocket.send('#serial?120623100000028\n')
-
-            logger.info("Logging in")
-            await self.websocket.send(knvparser.login(username, password))
-
-            logger.info("Reset Hotlinks")
-            await self.websocket.send(knvparser.command("printHotlinks"))
-            await self.websocket.send(knvparser.command("removeAllHotlinks"))
-
-        # await self.req_func()
-
-    async def req_func(self):
-        logger.info("Request List Functions")
-        await self.websocket.send(knvparser.get_list_functions(1, 2))
-        await self.websocket.send(knvparser.get_list_functions(2, 2))
 
     async def req_hotl(self, val):
-        logger.info("Request Hotlinks")
-        await self.websocket.send(knvparser.add_hotlink(val))
-
-    async def recv(self):
-        return knvparser.ws2json(await self.websocket.recv())
+        if self.websocket:
+            logger.info("Request Hotlinks")
+            await self.websocket.send(knvparser.add_hotlink(val))
 
     async def proc_command(self, response):
         if response["command"] == "login":
