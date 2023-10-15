@@ -4,7 +4,6 @@ Functions for interacting with KNV Home
 
 # pylint: disable=no-member
 
-from typing import Any
 from urllib.parse import unquote
 
 import asyncio
@@ -20,12 +19,14 @@ logger = logging.getLogger()
 class Socket:
     def __init__(self):
         self.websocket = None
+        self.callback = None
         self.url = None
         self.data = {}
         self.list_func = []
 
-    async def create(self, ip, username, password):
+    async def create(self, ip, username, password, callback=None):
         self.url = "ws://" + ip + ":3118"
+        self.callback = callback
 
         logger.info("Creating connection")
         async for websocket in websockets.connect(self.url):
@@ -98,11 +99,13 @@ class Socket:
 
             for val in response["values"]:
                 self.data[val["path"]]["value"] = unquote(val["result"])
+                self.callback(val["path"], unquote(val["result"]))
+
         else:
             logger.info(response)
 
 
-async def get_data(ip, username, password) -> dict:
+async def get_data(ip, username, password):
     """
     Login into the KNV heatpump and create the websocket
     """
@@ -191,6 +194,8 @@ async def get_data(ip, username, password) -> dict:
             if response["command"] != "HLInfo":
                 break
 
+        logger.info(data)
+
         while True:
             if response["command"] == "HLVal":
                 for val in response["values"]:
@@ -206,6 +211,11 @@ async def get_data(ip, username, password) -> dict:
         logger.debug(response)
 
         logger.debug(data)
+
+        logger.info(data)
+
+        # for val in data:
+        #     logger.info(val)
 
         logger.info("Finished data fetch")
 
