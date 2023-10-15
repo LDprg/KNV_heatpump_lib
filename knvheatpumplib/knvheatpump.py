@@ -102,7 +102,7 @@ class Socket:
             logger.info(response)
 
 
-async def get_data(ip, username, password) -> Any:
+async def get_data(ip, username, password) -> dict:
     """
     Login into the KNV heatpump and create the websocket
     """
