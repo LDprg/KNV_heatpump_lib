@@ -16,6 +16,94 @@ from knvheatpumplib import knvparser
 logger = logging.getLogger()
 
 
+class Socket:
+    def __init__(self):
+        self.websocket = None
+        self.url = None
+        self.data = {}
+        self.list_func = []
+
+    async def create(self, ip, username, password):
+        self.url = "ws://" + ip + ":3118"
+
+        logger.info("Creating connection")
+        for websocket in websockets.connect(self.url):
+            try:
+                self.websocket = websocket
+                async for message in websocket:
+                    knvparser.ws2json(message)
+            except websockets.ConnectionClosed:
+                self.websocket = None
+                continue
+            await self.websocket.send('#serial?120623100000028\n')
+
+            logger.info("Logging in")
+            await self.websocket.send(knvparser.login(username, password))
+
+            logger.info("Reset Hotlinks")
+            await self.websocket.send(knvparser.command("printHotlinks"))
+            await self.websocket.send(knvparser.command("removeAllHotlinks"))
+
+        # await self.req_func()
+
+    async def req_func(self):
+        logger.info("Request List Functions")
+        await self.websocket.send(knvparser.get_list_functions(1, 2))
+        await self.websocket.send(knvparser.get_list_functions(2, 2))
+
+    async def req_hotl(self, val):
+        logger.info("Request Hotlinks")
+        await self.websocket.send(knvparser.add_hotlink(val))
+
+    async def recv(self):
+        return knvparser.ws2json(await self.websocket.recv())
+
+    async def proc_command(self, response):
+        if response["command"] == "login":
+            logger.info("Successfully logged in with UserID: %s",
+                        response["userId"])
+        elif response["command"] == "printHotlinks":
+            logger.info("Received printHotlinks")
+        elif response["command"] == "removeAllHotlinks":
+            logger.info("Received removeAllHotlinks")
+        elif response["command"] == "addHotlink":
+            logger.info("Received addHotlink")
+        elif response["command"] == "getListFunctions":
+            logger.info("Received List Functions")
+
+            result = response["result"]["listfunctions"]
+            list_func = []
+
+            for el in result:
+                list_func.extend(knvparser.gen_func_val_ids(el))
+
+            for val in list_func:
+                await self.req_hotl(val)
+
+            self.list_func.extend(list_func)
+            self.list_func = list(dict.fromkeys(self.list_func))
+        elif response["command"] == "HLInfo":
+            logger.info("Received Info")
+
+            self.data[response["path"]] = {
+                "path": response["path"],
+                "name": unquote(response["name"]),
+                "unit": unquote(response["unit"]),
+                "writeable": response["writeable"],
+                "min": response["min"],
+                "max": response["max"],
+                "step": response["step"]
+            }
+
+        elif response["command"] == "HLVal":
+            logger.info("Received Value")
+
+            for val in response["values"]:
+                self.data[val["path"]]["value"] = unquote(val["result"])
+        else:
+            logger.info(response)
+
+
 async def get_data(ip, username, password):
     """
     Login into the KNV heatpump and create the websocket

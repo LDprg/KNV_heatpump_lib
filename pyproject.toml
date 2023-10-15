@@ -32,4 +32,3 @@ readme = "README.md"
 #     'importlib-metadata; python_version<"3.8"',
 # ]
 dynamic = ["version"]
-#version = "0.0.7"
