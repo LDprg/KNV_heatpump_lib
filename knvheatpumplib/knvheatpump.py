@@ -99,7 +99,7 @@ class Socket:
 
             for val in response["values"]:
                 self.data[val["path"]]["value"] = unquote(val["result"])
-                self.callback(val["path"], unquote(val["result"]))
+                self.callback(val["path"], self.data[val["path"]])
 
         else:
             logger.info(response)
@@ -194,7 +194,7 @@ async def get_data(ip, username, password):
             if response["command"] != "HLInfo":
                 break
 
-        logger.info(data)
+        # logger.info(data)
 
         while True:
             if response["command"] == "HLVal":
@@ -212,7 +212,7 @@ async def get_data(ip, username, password):
 
         logger.debug(data)
 
-        logger.info(data)
+        # logger.info(data)
 
         # for val in data:
         #     logger.info(val)
