@@ -4,6 +4,7 @@ Functions for interacting with KNV Home
 
 # pylint: disable=no-member
 
+from typing import Any
 from urllib.parse import unquote
 
 import asyncio
@@ -101,7 +102,7 @@ class Socket:
             logger.info(response)
 
 
-async def get_data(ip, username, password):
+async def get_data(ip, username, password) -> Any:
     """
     Login into the KNV heatpump and create the websocket
     """

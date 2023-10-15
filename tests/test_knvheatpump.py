@@ -17,12 +17,12 @@ from knvheatpumplib import knvheatpump
 logger = logging.getLogger()
 
 
-# def test_poll_get_data():
-#     """
-#     Test for KNV login
-#     """
-#     assert asyncio.run(knvheatpump.get_data(
-#         "192.168.0.17", "test", "test")), "Data Retrieval failed"
+def test_poll_get_data():
+    """
+    Test for KNV login
+    """
+    assert asyncio.run(knvheatpump.get_data(
+        "192.168.0.17", "test", "test")), "Data Retrieval failed"
 
 
 @pytest.mark.asyncio
