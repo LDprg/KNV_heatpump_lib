@@ -99,7 +99,11 @@ class Socket:
 
             for val in response["values"]:
                 self.data[val["path"]]["value"] = unquote(val["result"])
-                self.callback(self.data[val["path"]])
+                
+                try:
+                    self.callback(self.data[val["path"]])
+                except:
+                    logger.error("An error occured in the callback")
 
         else:
             logger.info(response)

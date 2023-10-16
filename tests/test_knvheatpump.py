@@ -26,11 +26,11 @@ def test_poll_get_data():
 
 
 @pytest.mark.skip
-def callback(uid, value):
-    logger.debug(uid + " - " + value)
+def callback(value):
+    logger.debug(value["path"] + " - " + value)
 
 
-@pytest.mark.skip
+#@pytest.mark.skip
 @pytest.mark.asyncio
 async def test_push_get_data():
     """
