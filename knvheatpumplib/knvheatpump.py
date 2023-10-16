@@ -99,7 +99,7 @@ class Socket:
 
             for val in response["values"]:
                 self.data[val["path"]]["value"] = unquote(val["result"])
-                self.callback(val["path"], self.data[val["path"]])
+                self.callback(self.data[val["path"]])
 
         else:
             logger.info(response)
@@ -214,8 +214,13 @@ async def get_data(ip, username, password):
 
         # logger.info(data)
 
-        # for val in data:
-        #     logger.info(val)
+        array = []
+        for val in data:
+            array.append(data[val])
+
+        for idx, ent in enumerate(array):
+            logger.info(idx)
+            logger.info(ent)
 
         logger.info("Finished data fetch")
 
