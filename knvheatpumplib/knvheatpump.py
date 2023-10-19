@@ -91,7 +91,8 @@ class Socket:
                 "writeable": response["writeable"],
                 "min": response["min"],
                 "max": response["max"],
-                "step": response["step"]
+                "step": response["step"],
+                "type": response["type"]
             }
 
         elif response["command"] == "HLVal":
