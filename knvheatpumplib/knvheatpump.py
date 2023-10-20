@@ -186,7 +186,8 @@ async def get_data(ip, username, password):
                 "writeable": response["writeable"],
                 "min": response["min"],
                 "max": response["max"],
-                "step": response["step"]
+                "step": response["step"],
+                "type": response["type"]
             }
 
             try:
