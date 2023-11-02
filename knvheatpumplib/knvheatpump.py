@@ -46,6 +46,18 @@ class Socket:
                 await self.websocket.send(knvparser.get_list_functions(1, 2))
                 await self.websocket.send(knvparser.get_list_functions(2, 2))
 
+                list_func = []
+
+                list_func.extend(knvparser.gen_func_val_ids(
+                    {"functionId": 1, "functiongroupId": 180, "unitId": 1}
+                ))
+
+                for val in list_func:
+                    await self.req_hotl(val)
+
+                self.list_func.extend(list_func)
+                self.list_func = list(dict.fromkeys(self.list_func))
+
                 async for message in websocket:
                     await self.proc_command(knvparser.ws2json(message))
             except websockets.ConnectionClosed:
@@ -149,6 +161,10 @@ async def get_data(ip, username, password):
             if response["command"] != "printHotlinks" and \
                response["command"] != "removeAllHotlinks":
                 break
+
+        value_ids.extend(knvparser.gen_func_val_ids(
+            {"functionId": 1, "functiongroupId": 180, "unitId": 1}
+        ))
 
         while True:
             result = response["result"]["listfunctions"]
