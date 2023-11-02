@@ -38,11 +38,11 @@ class Socket:
                 logger.info("Logging in")
                 await self.websocket.send(knvparser.login(username, password))
 
-                logger.info("Reset Hotlinks")
+                logger.debug("Reset Hotlinks")
                 await self.websocket.send(knvparser.command("printHotlinks"))
                 await self.websocket.send(knvparser.command("removeAllHotlinks"))
 
-                logger.info("Request List Functions")
+                logger.debug("Request List Functions")
                 await self.websocket.send(knvparser.get_list_functions(1, 2))
                 await self.websocket.send(knvparser.get_list_functions(2, 2))
 
@@ -54,7 +54,7 @@ class Socket:
 
     async def req_hotl(self, val):
         if self.websocket:
-            logger.info("Request Hotlinks")
+            logger.debug("Request Hotlinks")
             await self.websocket.send(knvparser.add_hotlink(val))
 
     async def proc_command(self, response):
@@ -62,13 +62,13 @@ class Socket:
             logger.info("Successfully logged in with UserID: %s",
                         response["userId"])
         elif response["command"] == "printHotlinks":
-            logger.info("Received printHotlinks")
+            logger.debug("Received printHotlinks")
         elif response["command"] == "removeAllHotlinks":
-            logger.info("Received removeAllHotlinks")
+            logger.debug("Received removeAllHotlinks")
         elif response["command"] == "addHotlink":
-            logger.info("Received addHotlink")
+            logger.debug("Received addHotlink")
         elif response["command"] == "getListFunctions":
-            logger.info("Received List Functions")
+            logger.debug("Received List Functions")
 
             result = response["result"]["listfunctions"]
             list_func = []
@@ -82,7 +82,7 @@ class Socket:
             self.list_func.extend(list_func)
             self.list_func = list(dict.fromkeys(self.list_func))
         elif response["command"] == "HLInfo":
-            logger.info("Received Info")
+            logger.debug("Received Info")
 
             self.data[response["path"]] = {
                 "path": response["path"],
@@ -96,15 +96,15 @@ class Socket:
             }
 
         elif response["command"] == "HLVal":
-            logger.info("Received Value")
+            logger.debug("Received Value")
 
             for val in response["values"]:
                 self.data[val["path"]]["value"] = unquote(val["result"])
-                
+
                 try:
                     await self.callback(self.data[val["path"]])
-                except:
-                    logger.error("An error occured in the callback")
+                except Exception as e:
+                    logger.error("Error in callback: %s", e)
 
         else:
             logger.info(response)
@@ -165,8 +165,6 @@ async def get_data(ip, username, password):
             if response["command"] != "getListFunctions":
                 break
 
-        logger.debug(value_ids)
-
         # Request Values
 
         for val in value_ids:
@@ -200,8 +198,6 @@ async def get_data(ip, username, password):
             if response["command"] != "HLInfo":
                 break
 
-        # logger.info(data)
-
         while True:
             if response["command"] == "HLVal":
                 for val in response["values"]:
@@ -213,12 +209,6 @@ async def get_data(ip, username, password):
             except asyncio.TimeoutError:
                 logger.info("Received all HLVal")
                 break
-
-        logger.debug(response)
-
-        logger.debug(data)
-
-        # logger.info(data)
 
         array = []
         for val in data:
