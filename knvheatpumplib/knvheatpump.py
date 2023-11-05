@@ -49,7 +49,15 @@ class Socket:
                 list_func = []
 
                 list_func.extend(knvparser.gen_func_val_ids(
+                    {"functionId": 1, "functiongroupId": 180, "unitId": 0}
+                ))
+
+                list_func.extend(knvparser.gen_func_val_ids(
                     {"functionId": 1, "functiongroupId": 180, "unitId": 1}
+                ))
+
+                list_func.extend(knvparser.gen_func_val_ids(
+                    {"functionId": 0, "functiongroupId": 120, "unitId": 1}
                 ))
 
                 list_func.extend(knvparser.gen_func_val_ids(
@@ -81,6 +89,9 @@ class Socket:
                     temp.append("1.110." + str(a) + ".0")
                 for a in range(150, 153):
                     temp.append("1.110." + str(a) + ".0")
+
+                for a in range(0, 5):
+                    temp.append("1.120." + str(a) + ".2")
 
                 list_func.extend(temp)
 
@@ -195,7 +206,13 @@ async def get_data(ip, username, password):
                 break
 
         value_ids.extend(knvparser.gen_func_val_ids(
+            {"functionId": 1, "functiongroupId": 180, "unitId": 0}
+        ))
+        value_ids.extend(knvparser.gen_func_val_ids(
             {"functionId": 1, "functiongroupId": 180, "unitId": 1}
+        ))
+        value_ids.extend(knvparser.gen_func_val_ids(
+            {"functionId": 0, "functiongroupId": 120, "unitId": 1}
         ))
         value_ids.extend(knvparser.gen_func_val_ids(
             {"functionId": 254, "functiongroupId": 110, "unitId": 1}
@@ -226,6 +243,9 @@ async def get_data(ip, username, password):
             temp.append("1.110." + str(a) + ".0")
         for a in range(150, 153):
             temp.append("1.110." + str(a) + ".0")
+
+        for a in range(0, 5):
+            temp.append("1.120." + str(a) + ".2")
 
         value_ids.extend(temp)
 
