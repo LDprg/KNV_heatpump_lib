@@ -106,6 +106,11 @@ class Socket:
             except websockets.ConnectionClosed:
                 self.websocket = None
                 continue
+            
+    async def send(self, id, val):
+        if self.websocket:
+            logger.debug("Send %s with %s", id, val)
+            await self.websocket.send(knvparser.set_vm_value(id, val))
 
     async def req_hotl(self, val):
         if self.websocket:

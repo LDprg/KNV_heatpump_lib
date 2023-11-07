@@ -26,17 +26,17 @@ def get_val_ids_by_func_group(code):
     Returns a set of partial var ids by function group
     """
     if code["functiongroupId"] == 100:
-        return [0, 5, 6, 100, 2, 3, 201, 202, 11, 12, 13, 21, 17, 203, 204, 207, 209, 20, 19, 7, 101, 9, 400, 401, 402]
+        return [0, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 25, 27, 100, 101, 201, 202, 203, 204, 207, 209, 400, 401, 402]
     elif code["functiongroupId"] == 101:
         return [0, 1, 5, 6, 20]
     elif code["functiongroupId"] == 110:
-        return [0, 5, 4, 1]
+        return [0, 1, 4, 5]
     elif code["functiongroupId"] == 120:
-        return [45, 56, 57, 0, 53]
+        return [0, 45, 53, 56, 57]
     elif code["functiongroupId"] == 180 and code["unitId"] == 0:
-        return [43, 0, 1, 2, 3, 4, 42, 17, 18, 19, 20, 21, 22, 27, 28, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41]
+        return [0, 1, 2, 3, 4, 17, 18, 19, 20, 21, 22, 27, 28, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43]
     elif code["functiongroupId"] == 180 and code["unitId"] == 1:
-        return [50, 103, 54, 55, 51, 52, 53, 57, 58, 56, 100, 150]
+        return [50, 51, 52, 53, 54, 55, 56, 57, 58, 100, 103, 150]
     else:
         return []
 
@@ -116,4 +116,13 @@ def add_hotlink(var_id):
     """
     return command("addHotlink", {
         "dap": var_id
+    })
+
+def set_vm_value(id, val):
+    """
+    Generated setVMValue command string
+    """
+    return command("setVMValue", {
+        "dap": id,
+        "value": str(val)
     })
