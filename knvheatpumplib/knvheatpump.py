@@ -153,7 +153,7 @@ class Socket:
                 "max": response["max"],
                 "step": response["step"],
                 "type": response["type"],
-                "listentries": response["listentries"] if "listentries" is response else None,
+                "listentries": response["listentries"] if "listentries" in response else None,
             }
 
         elif response["command"] == "HLVal":
@@ -291,7 +291,7 @@ async def get_data(ip, username, password):
                 "max": response["max"],
                 "step": response["step"],
                 "type": response["type"],
-                "listentries": response["listentries"] if "listentries" is response else None,
+                "listentries": response["listentries"] if "listentries" in response else None,
             }
 
             try:
