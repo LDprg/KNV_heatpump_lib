@@ -106,7 +106,7 @@ class Socket:
             except websockets.ConnectionClosed:
                 self.websocket = None
                 continue
-            
+
     async def send(self, id, val):
         if self.websocket:
             logger.debug("Send %s with %s", id, val)
@@ -152,7 +152,8 @@ class Socket:
                 "min": response["min"],
                 "max": response["max"],
                 "step": response["step"],
-                "type": response["type"]
+                "type": response["type"],
+                "listentries": response["listentries"] if "listentries" is response else None,
             }
 
         elif response["command"] == "HLVal":
@@ -289,7 +290,8 @@ async def get_data(ip, username, password):
                 "min": response["min"],
                 "max": response["max"],
                 "step": response["step"],
-                "type": response["type"]
+                "type": response["type"],
+                "listentries": response["listentries"] if "listentries" is response else None,
             }
 
             try:
