@@ -37,6 +37,8 @@ def get_val_ids_by_func_group(code):
         return [0, 1, 2, 3, 4, 17, 18, 19, 20, 21, 22, 27, 28, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43]
     elif code["functiongroupId"] == 180 and code["unitId"] == 1:
         return [50, 51, 52, 53, 54, 55, 56, 57, 58, 100, 103, 150]
+    elif code["functiongroupId"] == 190:
+        return list(range(0, 32)) + list(range(100, 132)) + list(range(200, 232))
     else:
         return []
 
@@ -139,6 +141,22 @@ def get_all_ids():
 
     list_func.extend(gen_func_val_ids(
         {"functionId": 1, "functiongroupId": 180, "unitId": 1}
+    ))
+
+    list_func.extend(gen_func_val_ids(
+        {"functionId": 1, "functiongroupId": 180, "unitId": 51}
+    ))
+
+    list_func.extend(gen_func_val_ids(
+        {"functionId": 1, "functiongroupId": 180, "unitId": 52}
+    ))
+
+    list_func.extend(gen_func_val_ids(
+        {"functionId": 1, "functiongroupId": 180, "unitId": 1}
+    ))
+
+    list_func.extend(gen_func_val_ids(
+        {"functionId": 1, "functiongroupId": 180, "unitId": 2}
     ))
 
     list_func.extend(gen_func_val_ids(
