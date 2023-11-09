@@ -46,54 +46,7 @@ class Socket:
                 await self.websocket.send(knvparser.get_list_functions(1, 2))
                 await self.websocket.send(knvparser.get_list_functions(2, 2))
 
-                list_func = []
-
-                list_func.extend(knvparser.gen_func_val_ids(
-                    {"functionId": 1, "functiongroupId": 180, "unitId": 0}
-                ))
-
-                list_func.extend(knvparser.gen_func_val_ids(
-                    {"functionId": 1, "functiongroupId": 180, "unitId": 1}
-                ))
-
-                list_func.extend(knvparser.gen_func_val_ids(
-                    {"functionId": 0, "functiongroupId": 120, "unitId": 1}
-                ))
-
-                list_func.extend(knvparser.gen_func_val_ids(
-                    {"functionId": 254, "functiongroupId": 110, "unitId": 1}
-                ))
-
-                temp = []
-                for a in range(1, 15):
-                    temp.append("1.110." + str(a) + ".0")
-                for a in range(20, 26):
-                    temp.append("1.110." + str(a) + ".0")
-                for a in range(30, 33):
-                    temp.append("1.110." + str(a) + ".0")
-                for a in range(40, 43):
-                    temp.append("1.110." + str(a) + ".0")
-                for a in range(50, 53):
-                    temp.append("1.110." + str(a) + ".0")
-                for a in range(60, 63):
-                    temp.append("1.110." + str(a) + ".0")
-                for a in range(70, 73):
-                    temp.append("1.110." + str(a) + ".0")
-                for a in range(80, 83):
-                    temp.append("1.110." + str(a) + ".0")
-                for a in range(100, 103):
-                    temp.append("1.110." + str(a) + ".0")
-                for a in range(110, 113):
-                    temp.append("1.110." + str(a) + ".0")
-                for a in range(120, 123):
-                    temp.append("1.110." + str(a) + ".0")
-                for a in range(150, 153):
-                    temp.append("1.110." + str(a) + ".0")
-
-                for a in range(0, 5):
-                    temp.append("1.120." + str(a) + ".2")
-
-                list_func.extend(temp)
+                list_func = knvparser.get_all_ids()
 
                 for val in list_func:
                     await self.req_hotl(val)
@@ -177,7 +130,7 @@ async def get_data(ip, username, password):
     """
 
     uri = "ws://" + ip + ":3118"
-    value_ids = []
+    value_ids = knvparser.get_all_ids()
     data = {}
 
     logger.info("Starting connection")
@@ -210,50 +163,6 @@ async def get_data(ip, username, password):
             if response["command"] != "printHotlinks" and \
                response["command"] != "removeAllHotlinks":
                 break
-
-        value_ids.extend(knvparser.gen_func_val_ids(
-            {"functionId": 1, "functiongroupId": 180, "unitId": 0}
-        ))
-        value_ids.extend(knvparser.gen_func_val_ids(
-            {"functionId": 1, "functiongroupId": 180, "unitId": 1}
-        ))
-        value_ids.extend(knvparser.gen_func_val_ids(
-            {"functionId": 0, "functiongroupId": 120, "unitId": 1}
-        ))
-        value_ids.extend(knvparser.gen_func_val_ids(
-            {"functionId": 254, "functiongroupId": 110, "unitId": 1}
-        ))
-
-        temp = []
-        for a in range(1, 15):
-            temp.append("1.110." + str(a) + ".0")
-        for a in range(20, 26):
-            temp.append("1.110." + str(a) + ".0")
-        for a in range(30, 33):
-            temp.append("1.110." + str(a) + ".0")
-        for a in range(40, 43):
-            temp.append("1.110." + str(a) + ".0")
-        for a in range(50, 53):
-            temp.append("1.110." + str(a) + ".0")
-        for a in range(60, 63):
-            temp.append("1.110." + str(a) + ".0")
-        for a in range(70, 73):
-            temp.append("1.110." + str(a) + ".0")
-        for a in range(80, 83):
-            temp.append("1.110." + str(a) + ".0")
-        for a in range(100, 103):
-            temp.append("1.110." + str(a) + ".0")
-        for a in range(110, 113):
-            temp.append("1.110." + str(a) + ".0")
-        for a in range(120, 123):
-            temp.append("1.110." + str(a) + ".0")
-        for a in range(150, 153):
-            temp.append("1.110." + str(a) + ".0")
-
-        for a in range(0, 5):
-            temp.append("1.120." + str(a) + ".2")
-
-        value_ids.extend(temp)
 
         while True:
             result = response["result"]["listfunctions"]

@@ -26,7 +26,7 @@ def get_val_ids_by_func_group(code):
     Returns a set of partial var ids by function group
     """
     if code["functiongroupId"] == 100:
-        return [0, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 25, 27, 100, 101, 201, 202, 203, 204, 207, 209, 400, 401, 402]
+        return [0, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 25, 27, 100, 101, 201, 202, 203, 204, 207, 209, 300, 301, 302, 303, 304, 400, 401, 402]
     elif code["functiongroupId"] == 101:
         return [0, 1, 5, 6, 20]
     elif code["functiongroupId"] == 110:
@@ -118,6 +118,7 @@ def add_hotlink(var_id):
         "dap": var_id
     })
 
+
 def set_vm_value(id, val):
     """
     Generated setVMValue command string
@@ -126,3 +127,54 @@ def set_vm_value(id, val):
         "dap": id,
         "value": str(val)
     })
+
+
+def get_all_ids():
+    """Returns base id list"""
+    list_func = []
+
+    list_func.extend(gen_func_val_ids(
+        {"functionId": 1, "functiongroupId": 180, "unitId": 0}
+    ))
+
+    list_func.extend(gen_func_val_ids(
+        {"functionId": 1, "functiongroupId": 180, "unitId": 1}
+    ))
+
+    list_func.extend(gen_func_val_ids(
+        {"functionId": 0, "functiongroupId": 120, "unitId": 1}
+    ))
+
+    list_func.extend(gen_func_val_ids(
+        {"functionId": 254, "functiongroupId": 110, "unitId": 1}
+    ))
+
+    for a in range(1, 15):
+        list_func.append("1.110." + str(a) + ".0")
+    for a in range(20, 26):
+        list_func.append("1.110." + str(a) + ".0")
+    for a in range(30, 33):
+        list_func.append("1.110." + str(a) + ".0")
+    for a in range(40, 43):
+        list_func.append("1.110." + str(a) + ".0")
+    for a in range(50, 53):
+        list_func.append("1.110." + str(a) + ".0")
+    for a in range(60, 63):
+        list_func.append("1.110." + str(a) + ".0")
+    for a in range(70, 73):
+        list_func.append("1.110." + str(a) + ".0")
+    for a in range(80, 83):
+        list_func.append("1.110." + str(a) + ".0")
+    for a in range(100, 103):
+        list_func.append("1.110." + str(a) + ".0")
+    for a in range(110, 113):
+        list_func.append("1.110." + str(a) + ".0")
+    for a in range(120, 123):
+        list_func.append("1.110." + str(a) + ".0")
+    for a in range(150, 153):
+        list_func.append("1.110." + str(a) + ".0")
+
+    for a in range(0, 5):
+        list_func.append("1.120." + str(a) + ".2")
+
+    return list_func
