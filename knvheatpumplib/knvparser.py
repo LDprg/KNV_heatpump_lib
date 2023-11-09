@@ -144,19 +144,19 @@ def get_all_ids():
     ))
 
     list_func.extend(gen_func_val_ids(
-        {"functionId": 1, "functiongroupId": 180, "unitId": 51}
+        {"functionId": 1, "functiongroupId": 190, "unitId": 51}
     ))
 
     list_func.extend(gen_func_val_ids(
-        {"functionId": 1, "functiongroupId": 180, "unitId": 52}
+        {"functionId": 1, "functiongroupId": 190, "unitId": 52}
     ))
 
     list_func.extend(gen_func_val_ids(
-        {"functionId": 1, "functiongroupId": 180, "unitId": 1}
+        {"functionId": 1, "functiongroupId": 190, "unitId": 1}
     ))
 
     list_func.extend(gen_func_val_ids(
-        {"functionId": 1, "functiongroupId": 180, "unitId": 2}
+        {"functionId": 1, "functiongroupId": 190, "unitId": 2}
     ))
 
     list_func.extend(gen_func_val_ids(
