@@ -30,7 +30,7 @@ async def callback(value):
     logger.debug("%s - %s", value["path"], value)
 
 
-#@pytest.mark.skip
+@pytest.mark.skip
 @pytest.mark.asyncio
 async def test_push_get_data():
     """

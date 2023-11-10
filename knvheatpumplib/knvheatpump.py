@@ -229,8 +229,7 @@ async def get_data(ip, username, password):
         for val in data:
             array.append(data[val])
 
-        for idx, ent in enumerate(array):
-            logger.info(idx)
+        for _, ent in enumerate(array):
             logger.info(ent)
 
         logger.info("Finished data fetch")
