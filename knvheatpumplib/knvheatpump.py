@@ -42,6 +42,8 @@ class Socket:
                 await self.websocket.send(knvparser.command("printHotlinks"))
                 await self.websocket.send(knvparser.command("removeAllHotlinks"))
 
+                await self.send("0.80.0.0", 0)
+                
                 logger.debug("Request List Functions")
                 await self.websocket.send(knvparser.get_list_functions(1, 2))
                 await self.websocket.send(knvparser.get_list_functions(2, 2))
@@ -64,6 +66,8 @@ class Socket:
         if self.websocket:
             logger.debug("Send %s with %s", id, val)
             await self.websocket.send(knvparser.set_vm_value(id, val))
+        else:
+            logger.warn("Request %s with %s failed! No Socket!", id, val)
 
     async def req_hotl(self, val):
         if self.websocket:
@@ -142,6 +146,8 @@ async def get_data(ip, username, password):
         await websocket.send(knvparser.login(username, password))
         await websocket.send(knvparser.command("printHotlinks"))
         await websocket.send(knvparser.command("removeAllHotlinks"))
+        
+        await websocket.send(knvparser.set_vm_value("0.80.0.0", 0))
 
         # Request & process List Function
 
