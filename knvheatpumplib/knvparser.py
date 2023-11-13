@@ -26,19 +26,17 @@ def get_val_ids_by_func_group(code):
     Returns a set of partial var ids by function group
     """
     if code["functiongroupId"] == 100:
-        return [0, 2, 3, 5, 6, 7, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 25, 27, 100, 101, 300, 301, 302, 303, 304, 400, 401, 402]
+        return [0, 2, 3, 9, 10, 101, 300, 301, 302, 303, 304]
     elif code["functiongroupId"] == 101:
         return [0, 1, 5, 6, 20]
     elif code["functiongroupId"] == 110:
-        return [0, 1, 4, 5]
-    elif code["functiongroupId"] == 120:
-        return [0, 45, 53, 56, 57]
-    elif code["functiongroupId"] == 180 and code["functionId"] == 0:
-        return [0, 1, 2, 3, 4, 17, 18, 19, 20, 21, 22, 27, 28, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43]
+        return [0]
+    elif code["functiongroupId"] == 120 and code["functionId"] == 0:
+        return [0, 45, 56]
     elif code["functiongroupId"] == 180 and code["functionId"] == 1:
-        return [50, 51, 52, 53, 54, 55, 56, 57, 58, 100, 103, 150]
+        return [103]
     elif code["functiongroupId"] == 190:
-        return [0, 1, 100, 101, 102, 103, 2, 200, 201, 202, 202, 3]
+        return [0, 1, 2, 3]
     else:
         return []
 
@@ -136,15 +134,7 @@ def get_all_ids():
     list_func = []
 
     list_func.extend(gen_func_val_ids(
-        {"functionId": 254, "functiongroupId": 110, "unitId": 1}
-    ))
-
-    list_func.extend(gen_func_val_ids(
         {"functionId": 0, "functiongroupId": 120, "unitId": 1}
-    ))
-
-    list_func.extend(gen_func_val_ids(
-        {"functionId": 0, "functiongroupId": 180, "unitId": 1}
     ))
 
     list_func.extend(gen_func_val_ids(
@@ -152,43 +142,14 @@ def get_all_ids():
     ))
 
     list_func.extend(gen_func_val_ids(
-        {"functionId": 1, "functiongroupId": 190, "unitId": 1}
-    ))
-
-    list_func.extend(gen_func_val_ids(
-        {"functionId": 2, "functiongroupId": 190, "unitId": 1}
-    ))
-
-    list_func.extend(gen_func_val_ids(
         {"functionId": 51, "functiongroupId": 190, "unitId": 1}
     ))
+    
+    list_func.append("1.110.2.0")
+    list_func.append("1.110.3.0")
+    list_func.append("1.110.5.0")
 
-    for a in range(1, 15):
-        list_func.append("1.110." + str(a) + ".0")
-    for a in range(20, 26):
-        list_func.append("1.110." + str(a) + ".0")
-    for a in range(30, 33):
-        list_func.append("1.110." + str(a) + ".0")
-    for a in range(40, 43):
-        list_func.append("1.110." + str(a) + ".0")
-    for a in range(50, 53):
-        list_func.append("1.110." + str(a) + ".0")
-    for a in range(60, 63):
-        list_func.append("1.110." + str(a) + ".0")
-    for a in range(70, 73):
-        list_func.append("1.110." + str(a) + ".0")
-    for a in range(80, 83):
-        list_func.append("1.110." + str(a) + ".0")
-    for a in range(100, 103):
-        list_func.append("1.110." + str(a) + ".0")
-    for a in range(110, 113):
-        list_func.append("1.110." + str(a) + ".0")
-    for a in range(120, 123):
-        list_func.append("1.110." + str(a) + ".0")
-    for a in range(150, 153):
-        list_func.append("1.110." + str(a) + ".0")
-
-    for a in range(0, 5):
+    for a in range(1, 5):
         list_func.append("1.120." + str(a) + ".2")
 
     return list_func
