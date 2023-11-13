@@ -34,6 +34,7 @@ class Socket:
                 self.websocket = websocket
 
                 await self.websocket.send('#serial?120623100000028\n')
+                await self.websocket.send(knvparser.set_vm_value("0.80.0.0", 0))
 
                 logger.info("Logging in")
                 await self.websocket.send(knvparser.login(username, password))
@@ -41,8 +42,6 @@ class Socket:
                 logger.debug("Reset Hotlinks")
                 await self.websocket.send(knvparser.command("printHotlinks"))
                 await self.websocket.send(knvparser.command("removeAllHotlinks"))
-
-                await self.send("0.80.0.0", 0)
                 
                 logger.debug("Request List Functions")
                 await self.websocket.send(knvparser.get_list_functions(1, 2))
@@ -143,12 +142,11 @@ async def get_data(ip, username, password):
         # Init stuff
 
         await websocket.send('#serial?120623100000028\n')
+        await websocket.send(knvparser.set_vm_value("0.80.0.0", 0))
         await websocket.send(knvparser.login(username, password))
         await websocket.send(knvparser.command("printHotlinks"))
         await websocket.send(knvparser.command("removeAllHotlinks"))
         
-        await websocket.send(knvparser.set_vm_value("0.80.0.0", 0))
-
         # Request & process List Function
 
         await websocket.send(knvparser.get_list_functions(1, 2))
