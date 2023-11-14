@@ -26,7 +26,7 @@ def get_val_ids_by_func_group(code):
     Returns a set of partial var ids by function group
     """
     if code["functiongroupId"] == 100:
-        return [0, 2, 3, 9, 10, 101, 300, 301, 302, 303, 304]
+        return [0, 2, 3, 9, 10, 11, 12, 13, 101, 300, 301, 302, 303, 304]
     elif code["functiongroupId"] == 101:
         return [0, 1, 5, 6, 20]
     elif code["functiongroupId"] == 110:
