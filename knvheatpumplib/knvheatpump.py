@@ -111,6 +111,11 @@ class Socket:
                 "type": response["type"],
                 "listentries": response["listentries"] if "listentries" in response else None,
             }
+            
+            if "listentries" in self.data[response["path"]]:
+                if self.data[response["path"]]["listentries"] is not None:
+                    for val in self.data[response["path"]]["listentries"]:
+                        val["text"] = unquote(val["text"])
 
         elif response["command"] == "HLVal":
             logger.debug("Received Value")
@@ -206,6 +211,11 @@ async def get_data(ip, username, password):
                 "type": response["type"],
                 "listentries": response["listentries"] if "listentries" in response else None,
             }
+            
+            if "listentries" in data[response["path"]]:
+                if data[response["path"]]["listentries"] is not None:
+                    for val in data[response["path"]]["listentries"]:
+                        val["text"] = unquote(val["text"])
 
             try:
                 async with timeout(0.5):
