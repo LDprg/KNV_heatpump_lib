@@ -42,7 +42,7 @@ class Socket:
                 logger.debug("Reset Hotlinks")
                 await self.websocket.send(knvparser.command("printHotlinks"))
                 await self.websocket.send(knvparser.command("removeAllHotlinks"))
-                
+
                 logger.debug("Request List Functions")
                 await self.websocket.send(knvparser.get_list_functions(1, 2))
                 await self.websocket.send(knvparser.get_list_functions(2, 2))
@@ -66,7 +66,7 @@ class Socket:
             logger.debug("Send %s with %s", id, val)
             await self.websocket.send(knvparser.set_vm_value(id, val))
         else:
-            logger.warn("Request %s with %s failed! No Socket!", id, val)
+            logger.warning("Request %s with %s failed! No Socket!", id, val)
 
     async def req_hotl(self, val):
         if self.websocket:
@@ -111,7 +111,7 @@ class Socket:
                 "type": response["type"],
                 "listentries": response["listentries"] if "listentries" in response else None,
             }
-            
+
             if "listentries" in self.data[response["path"]]:
                 if self.data[response["path"]]["listentries"] is not None:
                     for val in self.data[response["path"]]["listentries"]:
@@ -151,7 +151,7 @@ async def get_data(ip, username, password):
         await websocket.send(knvparser.login(username, password))
         await websocket.send(knvparser.command("printHotlinks"))
         await websocket.send(knvparser.command("removeAllHotlinks"))
-        
+
         # Request & process List Function
 
         await websocket.send(knvparser.get_list_functions(1, 2))
@@ -211,7 +211,7 @@ async def get_data(ip, username, password):
                 "type": response["type"],
                 "listentries": response["listentries"] if "listentries" in response else None,
             }
-            
+
             if "listentries" in data[response["path"]]:
                 if data[response["path"]]["listentries"] is not None:
                     for val in data[response["path"]]["listentries"]:
