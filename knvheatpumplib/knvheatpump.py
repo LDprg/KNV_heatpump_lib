@@ -59,7 +59,8 @@ class Socket:
                     await self.proc_command(knvparser.ws2json(message))
             except websockets.ConnectionClosed:
                 self.websocket = None
-                continue
+
+            await asyncio.sleep(5)
 
     async def send(self, id, val):
         if self.websocket:
