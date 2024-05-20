@@ -59,6 +59,9 @@ class Socket:
                     await self.proc_command(knvparser.ws2json(message))
             except websockets.ConnectionClosed:
                 self.websocket = None
+            except Exception as e:
+                self.websocket = None
+                logger.error(traceback.format_exc())
 
             await asyncio.sleep(5)
 
