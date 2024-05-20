@@ -128,11 +128,9 @@ class Socket:
                 self.data[val["path"]]["value"] = unquote(val["result"])
 
                 try:
-                    await self.callback(self.data[val["path"]])
+                    await self.callback(self.data)
                 except Exception as e:
                     logger.error("Error in callback: %s", e)
 
         else:
             logger.info(response)
-
-

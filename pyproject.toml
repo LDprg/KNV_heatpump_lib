@@ -23,12 +23,4 @@ authors = [{ name = "LDprg", email = "lukas_4dr@gmx.at" }]
 description = "KNV heatpump Python library"
 license = { text = "GPL-3" }
 readme = "README.md"
-# dependencies = [
-#     "logging",
-#     "async-timeout",
-#     "asyncio",
-#     "websockets",
-#     "requests",
-#     'importlib-metadata; python_version<"3.8"',
-# ]
 dynamic = ["version"]
