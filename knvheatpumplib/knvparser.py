@@ -33,8 +33,6 @@ def get_val_ids_by_func_group(code):
         return [0]
     elif code["functiongroupId"] == 120 and code["functionId"] == 0:
         return [0, 2, 8, 45, 56]
-    elif code["functiongroupId"] == 120 and code["functionId"] == 5:
-        return [1, 2]
     elif code["functiongroupId"] == 180 and code["functionId"] == 1:
         return [103]
     elif code["functiongroupId"] == 190:
@@ -152,5 +150,7 @@ def get_all_ids():
     list_func.append("1.110.5.0")
 
     list_func.append("1.120.1.2")
+    list_func.append("1.120.5.1")
+    list_func.append("1.120.5.2")
 
     return list_func
