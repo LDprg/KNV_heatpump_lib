@@ -33,6 +33,8 @@ def get_val_ids_by_func_group(code):
         return [0]
     elif code["functiongroupId"] == 120 and code["functionId"] == 0:
         return [0, 2, 8, 45, 56]
+    elif code["functiongroupId"] == 120 and code["functionId"] == 5:
+        return [1, 2]
     elif code["functiongroupId"] == 180 and code["functionId"] == 1:
         return [103]
     elif code["functiongroupId"] == 190:
